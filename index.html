@@ -316,6 +316,7 @@
         <div class="email-box">
           <div>
             <input
+              name="email"
               class="email hidde"
               title="email"
               type="email"
@@ -325,6 +326,7 @@
 
             <div class="error-box hidden">
               <input
+                name="email"
                 class="email-error"
                 title="email"
                 type="email"
@@ -377,10 +379,15 @@
       const btnNotify = document.querySelector(".notify");
 
       const hideError = function () {
-        document.querySelector(".error-box").classList.add("hidden");
-        document.querySelector(".email").classList.remove("hidden");
-        document.querySelector(".email").value =
-          document.querySelector(".email-error").value;
+        // document.querySelector(".error-box").classList.add("hidden");
+        // document.querySelector(".email").classList.remove("hidden");
+
+        document.querySelector(".provide").classList.add("hidden");
+        document.querySelector(".empty").classList.add("hidden");
+        document.querySelector(".email-error").classList.remove("email-error");
+        document.querySelector(".email-error").classList.add("email");
+        // document.querySelector(".email").value =
+        //   document.querySelector(".email-error").value;
       };
       const showError = function () {
         document.querySelector(".error-box").classList.remove("hidden");
@@ -405,19 +412,20 @@
           }
           showError();
 
-          if (validateEmail(error)) {
+          if (!validateEmail(error)) {
+            if (error === "") {
+              document.querySelector(".empty").classList.remove("hidden");
+              document.querySelector(".provide").classList.add("hidden");
+            } else {
+              document.querySelector(".empty").classList.add("hidden");
+              document.querySelector(".provide").classList.remove("hidden");
+            }
+            showError();
+          } else if (validateEmail(error)) {
             hideError();
           }
         } else {
           hideError();
-          if (document.querySelector(".email").classList.contains("hidden")) {
-            document.querySelector(".email").value =
-              document.querySelector(".email-error").value;
-          }
-          // else {
-          //   document.querySelector(".email").value !=
-          //     document.querySelector(".email-error").value;
-          // }
         }
       });
     </script>
